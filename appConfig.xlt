@@ -1,0 +1,24 @@
+{
+	"appName": "，",
+	"appPackageName": "top.webcat.app706726",
+	"appVersionName": "1.0",
+	"appVersionCode": 100000,
+	"data": {		
+		"启用顶栏": true,
+		"顶栏标题": "，",
+		"顶栏颜色": "#FF2C2E43",
+		"横屏": false,
+		"显示状态栏": true,
+		"启用进度条": true,
+		"进度条颜色": "#00000000",
+		"支持打开外部应用": true,
+		"提示打开外部应用": true,
+		"启动页面": "index.html"
+	},
+	"indexPages": [
+		
+	],
+	"extraHeaders": {
+		
+	}
+}
