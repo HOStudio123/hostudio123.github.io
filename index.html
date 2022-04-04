@@ -2,15 +2,17 @@
 
 <html>
 
-  <head>
+ <head> 
 
-	<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">	
-	<title>HOStudio</title>
-	  	<style type="text/css">
+  <meta charset="utf-8"> 
 
-		*{
+  <title>HOStudio</title>
 
-			padding: 0;
+  <script src="js/jq.js"></script> 
+
+  <style type="text/css">
+
+		*{			padding: 0;
 
 			margin: 0;
 
@@ -18,7 +20,9 @@
 
 		.big_box{
 
-			height: 100vh;
+            width: 100vh;
+
+			height: 500vh;
 
 			background: url('text_state_default_image_2.png');
 
@@ -26,13 +30,88 @@
 
 		}
 
-	</style>
-  <body>	
+	</style> 
 
-	<h1>Hello world,welcome to HOStudio!</h1>
-	<img src="null-405a7608a8370497.gif"/>
-	<center><img src="explorer.png"/></center>
-	<a href='https://www.programiz.com/python-programming/online-compiler'><img src="https://www.programiz.com/python-programming/online-compiler/assets/logos/logo.svg"/></a>  
-  </body>
+ </head> 
+
+ <body id="v1"> 
+
+  <div id="v2" class="big_box"> 
+
+    <script type="text/javascript">
+
+var t = null;
+
+function time() {
+
+  dt = new Date();
+
+  var y = dt.getFullYear();
+
+  var M = dt.getMonth() + 1;
+
+  var d = dt.getDate();
+
+  var h = dt.getHours();
+
+  var m = dt.getMinutes();
+
+  var s = dt.getSeconds();
+
+  M=checkTime(M);
+
+  d=checkTime(d);
+
+  h=checkTime(h);
+
+  m=checkTime(m);
+
+  s=checkTime(s);
+
+  document.getElementById("timeShow").
+
+  innerHTML = "中国标准时间:" + y + "-" + M + "-" + d + " " + h + ":" + m + ":" + s ;
+
+  t = setTimeout(time, 1000);
+
+        }
+
+        window.onload = function () {
+
+            time()
+
+        }
+
+        
+
+        function checkTime(i){
+
+        if(i<10){
+
+            i="0"+i;
+
+        }
+
+        return i;
+
+    }
+
+    </script>
+
 </head>
+
+<body>
+
+   <font size="7"><h1><strong><big>Welcome to HOStudio!</h1>
+
+   <div id="timeShow"></div></font>
+
+   <a id="v3" href="https://www.programiz.com/python-programming/online-compiler"><img id="v4" src="logo.svg" width="200px" height="50px/"></a>
+
+    <img src="null-405a7608a8370497.gif"/>
+
+  </div> 
+
+ </body>
+
 </html>
