@@ -1,0 +1,375 @@
+*{
+
+	margin: 0;	padding: 0;
+
+	box-sizing: border-box;
+
+}
+
+/* 垂直居中 */
+
+stection{
+
+	display: flex;
+
+	justify-content: center;
+
+	align-items: center;
+
+	min-height: 100vh;
+
+	position: relative;
+
+	overflow: hidden;
+
+	/* 渐变效果 */
+
+	background: linear-gradient(to bottom,#fif4f9,#dffiff);
+
+}
+
+/* 背景颜色 */
+
+stection .color{
+
+	position: absolute;
+
+	filter: blur(200px);
+
+}
+
+stection .color:nth-child(1){
+
+	top :-350px;
+
+	width: 600px;
+
+	height: 600px;
+
+	background: #ff350d;
+
+}
+
+stection .color:nth-child(2){
+
+	bottom :-150px;
+
+	left: 100px;
+
+	width: 500px;
+
+	height: 500px;
+
+	background: #fffd87;
+
+}
+
+stection .color:nth-child(1){
+
+	bottom :50px;
+
+	right: 100px;
+
+	width: 500px;
+
+	height: 500px;
+
+	background: #00d2ff;
+
+}
+
+.box{
+
+	position: relative;
+
+}
+
+.box .circle{
+
+	position: absolute;
+
+	background: rgba(255,255,255,0.1);
+
+	backdrop-filter: blur(5px);
+
+	box-shadow: 0 25px 45px rgba(0,0,0,0.1);
+
+	border: 1px solid rgba(255,255,255,0.1);
+
+	border-right: 1px solid rgba(255,255,255,0.1);
+
+	border-bottom: 1px solid rgba(255,255,255,0.1);
+
+	filter: hue-rotate(calc(var(--x) * 80deg));
+
+	animation: animate 10s linear infinite ;
+
+	animation-delay: calc(var(--x) *-2s );
+
+}
+
+@keyframes animate{
+
+	0% , 100%{
+
+		transform: translateY(-50px);
+
+	}
+
+	50%{
+
+		transform: translateY(50px);
+
+	}
+
+}
+
+.box .circle:nth-child(1){
+
+	top:-50px;
+
+	right: -60px;
+
+	width: 100px;
+
+	height: 100px;
+
+	
+
+}
+
+.box .circle:nth-child(2){
+
+	top:150px;
+
+	right: -100px;
+
+	width: 120px;
+
+	height: 120px;
+
+	z-index: 2;
+
+	
+
+}
+
+.box .circle:nth-child(3){
+
+	bottom: 50px;
+
+	right: -60px;
+
+	width: 80px;
+
+	height: 80px;
+
+	z-index: 2;
+
+	
+
+}
+
+.box .circle:nth-child(4){
+
+	bottom: -80px;
+
+	left: 100px;
+
+	width: 60px;
+
+	height: 60px;
+
+	z-index: 2;
+
+	
+
+}
+
+.box .circle:nth-child(5){
+
+	bottom: -80px;
+
+	left: 140px;
+
+	width: 60px;
+
+	height: 60px;
+
+	z-index: 2;
+
+	
+
+}
+
+/* 登录框样式 */
+
+.container{
+
+	position: relative;
+
+	width: 400px;
+
+	min-height: 400px;
+
+	background: rgba(255,255,255,0.1);
+
+	display: flex;
+
+	justify-content: center;
+
+	align-items: center;
+
+	backdrop-filter: blur(5px);
+
+	box-shadow: 0 25px 45px rgba(0,0,0,0.1);
+
+	border: 1px solid rgba(255,255,255,0.1);
+
+	border-right: 1px solid rgba(255,255,255,0.1);
+
+	border-bottom: 1px solid rgba(255,255,255,0.1);
+
+}
+
+.from{
+
+	position: relative;
+
+	width: 100%;
+
+	height: 100%;
+
+	padding: 50px;
+
+}
+
+.from h2{
+
+	position: relative;
+
+	clear: #fff;
+
+	font-size: 24px;
+
+	font-weight: 600;
+
+	letter-spacing: 5px;
+
+	margin-bottom: 30px;
+
+	cursor: pointer;
+
+}
+
+/* 登录下样式 */
+
+.from h2::before{
+
+	content:"";
+
+	position: absolute;
+
+	bottom: -5px;
+
+	width: 0px;
+
+	height:3px;
+
+	background: #fff;
+
+	transition: 0.5s;
+
+}
+
+.from h2::before::before{
+
+	width: 53px;
+
+}
+
+.from .inputbox{
+
+	width: 100%;
+
+	margin-top: 20px;
+
+}
+
+.from .inputbox input{
+
+	width: 100%;
+
+	padding: 10px 20px;
+
+	background: rgba(255,255,255,0.3);
+
+	outline: none;
+
+	border: none;
+
+	border-radius:30px;
+
+	border: 1px solid rgba(255,255,255,0.1);
+
+	border-right: 1px solid rgba(255,255,255,0.1);
+
+	border-bottom: 1px solid rgba(255,255,255,0.1);
+
+	font-size: 16px;
+
+	letter-spacing: 1px;
+
+	color:#fff;
+
+	box-shadow: 0 5px 15px rgba(0,0,0,0.5) ;
+
+	
+
+}
+
+.from .inputbox input::placeholder{
+
+	clear: #fff;
+
+}
+
+/* 登录按钮样式 */
+
+.from .inputbox input[type="submit"]{
+
+	background: #fff;
+
+	color: #666;
+
+	max-width: 120px;
+
+	margin-bottom: 20px ;
+
+	font-weight: 600;
+
+	cursor: pointer;
+
+}
+
+.forget{
+
+	margin-top:5px ;
+
+	color: blue;
+
+	letter-spacing: 1px;
+
+	
+
+}
+
+.forget a {
+
+	font-weight: 600;
+
+	text-decoration: none;
+
+	color: pink;
+
+}
