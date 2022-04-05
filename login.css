@@ -248,7 +248,7 @@ stection .color:nth-child(1){
 
 	position: relative;
 
-	clear: #000000;
+	color: #000000;
 
 	font-size: 24px;
 
@@ -276,7 +276,7 @@ stection .color:nth-child(1){
 
 	height:3px;
 
-	background: #fff;
+	background: #ffffff;
 
 	transition: 0.5s;
 
@@ -330,7 +330,7 @@ stection .color:nth-child(1){
 
 .from .inputbox input::placeholder{
 
-	clear: #fff;
+	color: #ffffff;
 
 }
 
