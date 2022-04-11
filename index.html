@@ -1,176 +1,77 @@
 <!DOCTYPE html>
+  <html>
+    <head> 
+      <meta charset='utf-8'> 
+        <title>HOStudio</title>
+          <style type='text/css'>
+            *{
+                padding: 0;
+                margin: 0;
+               }
+            .big.box{
+                            width: 240vh;
+                            height: 300vh;
+                            background: url('text_state_default_image_2.png');
+			                      background-size: 100% 100%;
+                           }
 
-<html>
-
- <head> 
-
-  <meta charset="utf-8"> 
-
-  <title>HOStudio</title>
-
-  <script src="js/jq.js"></script> 
-
-  <style type="text/css">
-
-		*{			padding: 0;
-
-			margin: 0;
-
-		}
-
-		.big_box{
-
-            width: 260vh;
-
-			height: 300vh;
-
-			background: url('text_state_default_image_2.png');
-
-			background-size: 100% 100%;
-
-		}
-
-	</style> 
-
- </head> 
-
- <body id="v1"> 
-
-  <div id="v2" class="big_box"> 
-
-    <script type="text/javascript">
-
-var t = null;
-
-function time() {
-
-  dt = new Date();
-
-  var y = dt.getFullYear();
-
-  var M = dt.getMonth() + 1;
-
-  var d = dt.getDate();
-
-  var h = dt.getHours();
-
-  var m = dt.getMinutes();
-
-  var s = dt.getSeconds();
-
-  M=checkTime(M);
-
-  d=checkTime(d);
-
-  h=checkTime(h);
-
-  m=checkTime(m);
-
-  s=checkTime(s);
-
-  document.getElementById("timeShow").
-
-  innerHTML = "China standard time:" + y + "-" + M + "-" + d + " " + h + ":" + m + ":" + s ;
-
-  t = setTimeout(time, 1000);
-
-        }
-
+	        </style> 
+        </head> 
+      <body> 
+        <div class='big_box'> 
+          var t = null;
+          function time() {
+          dt = new Date();
+          var y = dt.getFullYear();
+          var M = dt.getMonth() + 1;
+          var d = dt.getDate();
+          var h = dt.getHours();
+          var m = dt.getMinutes();
+          var s = dt.getSeconds();
+          M=checkTime(M);
+          d=checkTime(d);
+          h=checkTime(h);
+          m=checkTime(m);
+          s=checkTime(s);
+          document.getElementById("timeShow").
+          innerHTML = ' China standard time : 'y + '//' + M + '//' + d + '//' + h + ':' + m + ':' + s ;
+          t = setTimeout(time,1000);
+                                      }
         window.onload = function () {
-
-            time()
-
-        }
-
-        
-
+                                                            time()
+                                                          }
         function checkTime(i){
-
-        if(i<10){
-
-            i="0"+i;
-
-        }
-
-        return i;
-
-    }
-
-    </script>
-
-</head>
-
-<body>
-
-   <font size="7"><h1><strong><big>Welcome to HOStudio!</h1>
-
-   <div id="timeShow"></div></font>
-   
-   <a href='login.html'><button>Login</button></a>
-
-   <a id="v3" href="https://www.programiz.com/python-programming/online-compiler"><img id="v4" src="logo.svg" width="200px" height="50px/"></a>
-
-    <img src="null-405a7608a8370497.gif"/><a href='download'><img src="explorer.png"/></a>
-   <script type="text/javascript">
-
-(function() {
-
-    var coreSocialistValues = ["富强", "民主", "文明", "和谐", "自由", "平等", "公正", "法治", "爱国", "敬业", "诚信", "友善"], index = Math.floor(Math.random()*coreSocialistValues.length);
-
-    document.body.addEventListener('click', function(e)
-
-      {if (e.target.tagName == 'A')
-
-        {return;
-
-          }
-
-        var x = e.pageX, y = e.pageY, span = document.createElement('span');
-
-        span.textContent = coreSocialistValues[index];
-
-        index = (index + 1) % coreSocialistValues.length;span.style.cssText = ['z-index: 9999999; position: absolute; font-weight: bold; color: #ff6651; top: ', y - 20, 'px; left: ', x, 'px;'].join('');
-
-     document.body.appendChild(span);animate(span);
-
-     }
-
-   );
-
-   function animate(el) {
-
-       var i = 0, top = parseInt(el.style.top), id = setInterval(frame, 16.7);
-
-       function frame() {
-
-           if (i > 180) {
-
-             clearInterval(id);
-
-             el.parentNode.removeChild(el);
-
-             } 
-
-           else {
-
-             i+=2;el.style.top = top - i + 'px';
-
-             el.style.opacity = (180 - i) / 180;
-
-             }
-
-           }
-
-         }
-
-       }
-
-     (
-
-     )
-
-     );
-
-</script>
-</body>
-</html>
+          if(i<10){
+            i='0'+i;
+                       }
+          return i;
+                                              }
+        <body>
+          <font size='7'>
+            <h1 style='color:#1f93ff'>
+              <strong>
+                   Welcome to HOStudio !
+             </h1>
+              <div id='timeShow'>
+                </strong>
+              </div>
+          </font>
+          <a href='login.html'>
+            <font color='green'>
+              Log in to hostudio account
+            </font>
+          </a>
+          <br>
+          <a href='https://www.programiz.com/python-programming/online-compiler'>
+            <img  src='logo.svg' width="200px" height="50px/">
+          </a>
+          <br>
+          <img src="null-405a7608a8370497.gif"/>
+          <br>
+          <a href='download.html'>
+            <img src="explorer.png"/>
+            <p1>Download files<\p1>
+          </a>
+        </body>
+      </head>
+    </html>
