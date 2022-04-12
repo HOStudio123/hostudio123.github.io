@@ -3,18 +3,10 @@
 <head> 
 <meta charset='utf-8'> 
 <title>HOStudio</title>
-<style type='text/css'>
-*{
-  padding:0;
-  margin:0
-  }
-.big.box{
-  width: 240vh;
-  height: 300vh;
-  background:url("text_state_default_image_2.png");
-  background-size: 100% 100%;
-  }
-</style>
+<body background="https://hostudio123.github.io/text_state_default_image_2.png"
+style="background-repeat:no-repeat;
+background-size:100% 100%;
+background-attachment: fixed;">
 <script>
 var t = null;
 function time() {
@@ -33,41 +25,40 @@ function time() {
     document.getElementById('timeShow').
     innerHTML = 'China standard time : '+ y + '-' + M + '-' + d + '-' + h + ':' + m + ':' + s ;
     t = setTimeout(time,1000)
-    }
+  }
   window.onload = function () {
       time()
-      }
+    }
     function checkTime(i){
         if(i<10){
           i='0'+i;
-          }
+        }
         return i;
-        }  
-</script>                                    
-<body>
-<font size='6'>
-<h1 style='color:#1f93ff'>
-<strong>
-Welcome to HOStudio !
-</h1>
-<div id='timeShow'>
-</div>
-</strong>
-</font>
-<a href='login.html'>
-<font color='green'>
-Log in to hostudio account
-</font>
-</a>
-<br>
-<a href='https://www.programiz.com/python-programming/online-compiler'>
-<img  src='logo.svg' width="200px" height="50px/">
-</a>
-<br>
-<a href='download.html'>
-<img src="explorer.png"/>
-<p1>Download files</p1>
-</a>
-</body>
-</head>
-</html>
+      } 
+      </script>
+      <font size='6'>
+      <h1 style='color:blue'>
+      <strong>
+      Welcome to HOStudio !
+      </h1>
+      <div id='timeShow'>
+      </div>
+      </strong>
+      </font>
+      <a href='login.html'>
+      <font color='green'>
+      Log in to hostudio account
+      </font>
+      </a>
+      <br>
+      <a href='https://www.programiz.com/python-programming/online-compiler'>
+      <img src='logo.svg' width="200px" height="50px/">
+      </a>
+      <br>
+      <a href='download.html'>
+      <img src="explorer.png"/>
+      <p1>Download files</p1>
+      </a>
+      </body>
+      </head>
+      </html>
