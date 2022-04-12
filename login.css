@@ -1,8 +1,8 @@
 *{
 
-	margin: 0;	padding: 0;
+  margin: 0; padding: 0;
 
-	box-sizing: border-box;
+  box-sizing: border-box;
 
 }
 
@@ -10,21 +10,21 @@
 
 stection{
 
-	display: flex;
+  display: flex;
 
-	justify-content: center;
+  justify-content: center;
 
-	align-items: center;
+  align-items: center;
 
-	min-height: 100vh;
+  min-height: 100vh;
 
-	position: relative;
+  position: relative;
 
-	overflow: hidden;
+  overflow: hidden;
 
-	/* 渐变效果 */
+  /* 渐变效果 */
 
-	background: linear-gradient(to bottom,#fif4f9,#dffiff);
+  background: linear-gradient(to bottom,#fif4f9,#dffiff);
 
 }
 
@@ -32,173 +32,173 @@ stection{
 
 stection .color{
 
-	position: absolute;
+  position: absolute;
 
-	filter: blur(200px);
+  filter: blur(200px);
 
 }
 
 stection .color:nth-child(1){
 
-	top :-350px;
+  top :-350px;
 
-	width: 600px;
+  width: 600px;
 
-	height: 600px;
+  height: 600px;
 
-	background: #ff350d;
+  background: #ff350d;
 
 }
 
 stection .color:nth-child(2){
 
-	bottom :-150px;
+  bottom :-150px;
 
-	left: 100px;
+  left: 100px;
 
-	width: 500px;
+  width: 500px;
 
-	height: 500px;
+  height: 500px;
 
-	background: #fffd87;
+  background: #fffd87;
 
 }
 
 stection .color:nth-child(1){
 
-	bottom :50px;
+  bottom :50px;
 
-	right: 100px;
+  right: 100px;
 
-	width: 500px;
+  width: 500px;
 
-	height: 500px;
+  height: 500px;
 
-	background: #00d2ff;
+  background: #00d2ff;
 
 }
 
 .box{
 
-	position: relative;
+  position: relative;
 
 }
 
 .box .circle{
 
-	position: absolute;
+  position: absolute;
 
-	background: rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.1);
 
-	backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
 
-	box-shadow: 0 25px 45px rgba(0,0,0,0.1);
+  box-shadow: 0 25px 45px rgba(0,0,0,0.1);
 
-	border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.1);
 
-	border-right: 1px solid rgba(255,255,255,0.1);
+  border-right: 1px solid rgba(255,255,255,0.1);
 
-	border-bottom: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
 
-	filter: hue-rotate(calc(var(--x) * 80deg));
+  filter: hue-rotate(calc(var(--x) * 80deg));
 
-	animation: animate 10s linear infinite ;
+  animation: animate 10s linear infinite ;
 
-	animation-delay: calc(var(--x) *-2s );
+  animation-delay: calc(var(--x) *-2s );
 
 }
 
 @keyframes animate{
 
-	0% , 100%{
+  0% , 100%{
 
-		transform: translateY(-50px);
+    transform: translateY(-50px);
 
-	}
+  }
 
-	50%{
+  50%{
 
-		transform: translateY(50px);
+    transform: translateY(50px);
 
-	}
+  }
 
 }
 
 .box .circle:nth-child(1){
 
-	top:-50px;
+  top:-50px;
 
-	right: -60px;
+  right: -60px;
 
-	width: 100px;
+  width: 100px;
 
-	height: 100px;
+  height: 100px;
 
-	
+
 
 }
 
 .box .circle:nth-child(2){
 
-	top:150px;
+  top:150px;
 
-	right: -100px;
+  right: -100px;
 
-	width: 120px;
+  width: 120px;
 
-	height: 120px;
+  height: 120px;
 
-	z-index: 2;
+  z-index: 2;
 
-	
+
 
 }
 
 .box .circle:nth-child(3){
 
-	bottom: 50px;
+  bottom: 50px;
 
-	right: -60px;
+  right: -60px;
 
-	width: 80px;
+  width: 80px;
 
-	height: 80px;
+  height: 80px;
 
-	z-index: 2;
+  z-index: 2;
 
-	
+
 
 }
 
 .box .circle:nth-child(4){
 
-	bottom: -80px;
+  bottom: -80px;
 
-	left: 100px;
+  left: 100px;
 
-	width: 60px;
+  width: 60px;
 
-	height: 60px;
+  height: 60px;
 
-	z-index: 2;
+  z-index: 2;
 
-	
+
 
 }
 
 .box .circle:nth-child(5){
 
-	bottom: -80px;
+  bottom: -80px;
 
-	left: 140px;
+  left: 140px;
 
-	width: 60px;
+  width: 60px;
 
-	height: 60px;
+  height: 60px;
 
-	z-index: 2;
+  z-index: 2;
 
-	
+
 
 }
 
@@ -206,59 +206,59 @@ stection .color:nth-child(1){
 
 .container{
 
-	position: relative;
+  position: relative;
 
-	width: 400px;
+  width: 400px;
 
-	min-height: 400px;
+  min-height: 400px;
 
-	background: rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.1);
 
-	display: flex;
+  display: flex;
 
-	justify-content: center;
+  justify-content: center;
 
-	align-items: center;
+  align-items: center;
 
-	backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
 
-	box-shadow: 0 25px 45px rgba(0,0,0,0.1);
+  box-shadow: 0 25px 45px rgba(0,0,0,0.1);
 
-	border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.1);
 
-	border-right: 1px solid rgba(255,255,255,0.1);
+  border-right: 1px solid rgba(255,255,255,0.1);
 
-	border-bottom: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
 
 }
 
 .from{
 
-	position: relative;
+  position: relative;
 
-	width: 100%;
+  width: 100%;
 
-	height: 100%;
+  height: 100%;
 
-	padding: 50px;
+  padding: 50px;
 
 }
 
 .from h2{
 
-	position: relative;
+  position: relative;
 
-	color: #000000;
+  color: #000000;
 
-	font-size: 24px;
+  font-size: 24px;
 
-	font-weight: 600;
+  font-weight: 600;
 
-	letter-spacing: 5px;
+  letter-spacing: 5px;
 
-	margin-bottom: 30px;
+  margin-bottom: 30px;
 
-	cursor: pointer;
+  cursor: pointer;
 
 }
 
@@ -266,71 +266,71 @@ stection .color:nth-child(1){
 
 .from h2::before{
 
-	content:"";
+  content:"";
 
-	position: absolute;
+  position: absolute;
 
-	bottom: -5px;
+  bottom: -5px;
 
-	width: 0px;
+  width: 0px;
 
-	height:3px;
+  height:3px;
 
-	background: #ffffff;
+  background: #ffffff;
 
-	transition: 0.5s;
+  transition: 0.5s;
 
 }
 
 .from h2::before::before{
 
-	width: 53px;
+  width: 53px;
 
 }
 
 .from .inputbox{
 
-	width: 100%;
+  width: 100%;
 
-	margin-top: 20px;
+  margin-top: 20px;
 
 }
 
 .from .inputbox input{
 
-	width: 100%;
+  width: 100%;
 
-	padding: 10px 20px;
+  padding: 10px 20px;
 
-	background: rgba(255,255,255,0.3);
+  background: rgba(255,255,255,0.3);
 
-	outline: none;
+  outline: none;
 
-	border: none;
+  border: none;
 
-	border-radius:30px;
+  border-radius:30px;
 
-	border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.1);
 
-	border-right: 1px solid rgba(255,255,255,0.1);
+  border-right: 1px solid rgba(255,255,255,0.1);
 
-	border-bottom: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
 
-	font-size: 16px;
+  font-size: 16px;
 
-	letter-spacing: 1px;
+  letter-spacing: 1px;
 
-	color:#ffffff;
+  color:#000000;
 
-	box-shadow: 0 5px 15px rgba(0,0,0,0.5) ;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.5) ;
 
-	
+
 
 }
 
 .from .inputbox input::placeholder{
 
-	color: #ffffff;
+  color: #000000;
 
 }
 
@@ -338,38 +338,38 @@ stection .color:nth-child(1){
 
 .from .inputbox input[type="submit"]{
 
-	background: #fff;
+  background: #fff;
 
-	color: #666;
+  color: #666;
 
-	max-width: 120px;
+  max-width: 120px;
 
-	margin-bottom: 20px ;
+  margin-bottom: 20px ;
 
-	font-weight: 600;
+  font-weight: 600;
 
-	cursor: pointer;
+  cursor: pointer;
 
 }
 
 .forget{
 
-	margin-top:5px ;
+  margin-top:5px ;
 
-	color: blue;
+  color: blue;
 
-	letter-spacing: 1px;
+  letter-spacing: 1px;
 
-	
+
 
 }
 
 .forget a {
 
-	font-weight: 600;
+  font-weight: 600;
 
-	text-decoration: none;
+  text-decoration: none;
 
-	color: pink;
+  color: pink;
 
 }
