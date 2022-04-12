@@ -1,77 +1,73 @@
 <!DOCTYPE html>
-  <html>
-    <head> 
-      <meta charset='utf-8'> 
-        <title>HOStudio</title>
-          <style type='text/css'>
-            *{
-                padding: 0;
-                margin: 0;
-               }
-            .big.box{
-                            width: 240vh;
-                            height: 300vh;
-                            background: url('text_state_default_image_2.png');
-			                      background-size: 100% 100%;
-                           }
-
-	        </style> 
-        </head> 
-      <body> 
-        <div class='big_box'> 
-          var t = null;
-          function time() {
-          dt = new Date();
-          var y = dt.getFullYear();
-          var M = dt.getMonth() + 1;
-          var d = dt.getDate();
-          var h = dt.getHours();
-          var m = dt.getMinutes();
-          var s = dt.getSeconds();
-          M=checkTime(M);
-          d=checkTime(d);
-          h=checkTime(h);
-          m=checkTime(m);
-          s=checkTime(s);
-          document.getElementById("timeShow").
-          innerHTML = ' China standard time : 'y + '//' + M + '//' + d + '//' + h + ':' + m + ':' + s ;
-          t = setTimeout(time,1000);
-                                      }
-        window.onload = function () {
-                                                            time()
-                                                          }
-        function checkTime(i){
-          if(i<10){
-            i='0'+i;
-                       }
-          return i;
-                                              }
-        <body>
-          <font size='7'>
-            <h1 style='color:#1f93ff'>
-              <strong>
-                   Welcome to HOStudio !
-             </h1>
-              <div id='timeShow'>
-                </strong>
-              </div>
-          </font>
-          <a href='login.html'>
-            <font color='green'>
-              Log in to hostudio account
-            </font>
-          </a>
-          <br>
-          <a href='https://www.programiz.com/python-programming/online-compiler'>
-            <img  src='logo.svg' width="200px" height="50px/">
-          </a>
-          <br>
-          <img src="null-405a7608a8370497.gif"/>
-          <br>
-          <a href='download.html'>
-            <img src="explorer.png"/>
-            <p1>Download files<\p1>
-          </a>
-        </body>
-      </head>
-    </html>
+<html>
+<head> 
+<meta charset='utf-8'> 
+<title>HOStudio</title>
+<style type='text/css'>
+*{
+  padding:0;
+  margin:0
+  }
+.big.box{
+  width: 240vh;
+  height: 300vh;
+  background:url("text_state_default_image_2.png");
+  background-size: 100% 100%;
+  }
+</style>
+<script>
+var t = null;
+function time() {
+    dt = new Date();
+    var y = dt.getFullYear();
+    var M = dt.getMonth()+1;
+    var d = dt.getDate();
+    var h = dt.getHours();
+    var m = dt.getMinutes();
+    var s = dt.getSeconds();
+    M=checkTime(M);
+    d=checkTime(d);
+    h=checkTime(h);
+    m=checkTime(m);
+    s=checkTime(s);
+    document.getElementById('timeShow').
+    innerHTML = 'China standard time : '+ y + '-' + M + '-' + d + '-' + h + ':' + m + ':' + s ;
+    t = setTimeout(time,1000)
+    }
+  window.onload = function () {
+      time()
+      }
+    function checkTime(i){
+        if(i<10){
+          i='0'+i;
+          }
+        return i;
+        }  
+</script>                                    
+<body>
+<font size='6'>
+<h1 style='color:#1f93ff'>
+<strong>
+Welcome to HOStudio !
+</h1>
+<div id='timeShow'>
+</div>
+</strong>
+</font>
+<a href='login.html'>
+<font color='green'>
+Log in to hostudio account
+</font>
+</a>
+<br>
+<a href='https://www.programiz.com/python-programming/online-compiler'>
+<img  src='logo.svg' width="200px" height="50px/">
+</a>
+<br>
+<a href='download.html'>
+<img src="explorer.png"/>
+<p1>Download files</p1>
+</a>
+</body>
+</head>
+</html>
