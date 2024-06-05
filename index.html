@@ -2,78 +2,82 @@
 <html>
 <head>
 <meta charset='utf-8'>
-<title>HOStudio</title>
+<title>
+HOStudio
+</title>
 <link rel="stylesheet" href="/css/bootstrap.min.css">
-<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js">
+</script>
 <body background="background.png" style="background-repeat:no-repeat; background-size:100% 100%; background-attachment: fixed;">
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 <div class="container-fluid mx-3">
 <a class="navbar-brand" href="/index.html">Welcome to HOStudio Offical Website !</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
-                aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarScroll">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                </ul>
-                <ul class="navbar-nav me-0 my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/index.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/download.html">Files</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="Pages">Pages</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login.html">Log in</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/register.html">Register</a>
-                    </li>
-                </ul>
-            </div>
+<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+<span class="navbar-toggler-icon">
+</span>
+</button>
+<div class="collapse navbar-collapse" id="navbarScroll">
+<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+</ul>
+<ul class="navbar-nav me-0 my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+<li class="nav-item">
+<a class="nav-link active" href="/index.html">Home</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/download.html">Files</a>
+        </li>
+        <li class="nav-item">
+<a class="nav-link" href="Pages">Pages</a>
+        </li>
+        <li class="nav-item">
+<a class="nav-link" href="/login.html">Log in</a>
+        </li>
+        <li class="nav-item">
+<a class="nav-link" href="/register.html">Register</a>
+        </li>
+    </ul>
+</div>
         </div>
     </nav>
 
-    <div class="mx-5 my-3">
-        <script>
-            var t = null;
-            function time() {
-                dt = new Date();
-                var y = dt.getFullYear();
-                var M = dt.getMonth() + 1;
-                var d = dt.getDate();
-                var h = dt.getHours();
-                var m = dt.getMinutes();
-                var s = dt.getSeconds();
-                M = checkTime(M);
-                d = checkTime(d);
-                h = checkTime(h);
-                m = checkTime(m);
-                s = checkTime(s);
-                document.getElementById('timeShow').
-                    innerHTML = 'China standard time : ' + y + '-' + M + '-' + d + '-' + h + ':' + m + ':' + s;
-                t = setTimeout(time, 1000)
-            }
-            window.onload = function () {
-                time()
-            }
-            function checkTime(i) {
-                if (i < 10) {
-                    i = '0' + i;
-                }
-                return i;
-            } 
-        </script>
+<div class="time">
+<script>
+var t = null;
+function time() {
+    dt = new Date();
+    var y = dt.getFullYear();
+    var M = dt.getMonth() + 1;
+    var d = dt.getDate();
+    var h = dt.getHours();
+    var m = dt.getMinutes();
+    var s = dt.getSeconds();
+    M = checkTime(M);
+    d = checkTime(d);
+    h = checkTime(h);
+    m = checkTime(m);
+    s = checkTime(s);
+    document.getElementById('timeShow').
+        innerHTML = 'Time: ' + y + '-' + M + '-' + d + '-' + h + ':' + m + ':' + s;
+    t = setTimeout(time, 1000)
+}
+window.onload = function () {
+    time()
+}
+function checkTime(i) {
+    if (i < 10) {
+        i = '0' + i;
+    }
+    return i;
+} 
+</script>
         <font size='6'>
-            <strong>
-                <div id='timeShow'></div>
-            </strong>
-        </font>
-        <a target="_blank" href='https://www.programiz.com/python-programming/online-compiler'>
-            <img src='logo.svg' width="200px" height="50px/">
+<strong>
+    <div id='timeShow'></div>
+</strong>
+</font>
+<br><br>
+<a target="_blank" href='https://www.programiz.com/python-programming/online-compiler'>
+<img src='logo.svg' width="200px" height="50px/">
         </a>
         <br>
         <br>
