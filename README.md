@@ -1,3 +1,3 @@
-# HOStudio Office Website
+# HOStudio Offical Website
 
 Thanks [Katorly](https://github.com/katorly) for his help and support my website !
