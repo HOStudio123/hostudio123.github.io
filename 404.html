@@ -1,44 +1,238 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - Page Not Found</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            text-align: center;
-        }
-        h1 {
-            font-size: 72px;
-            margin: 0;
-        }
-        p {
-            font-size: 24px;
-        }
-        a {
-            color: #007BFF;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 Not Found</title>
+  <style>
+    body {
+      background-color: #f0f0f0;
+      color: #333;
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
+    .container {
+      text-align: center;
+    }
+    h1 {
+      font-size: 10rem;
+      margin: 0;
+      animation: glitch 1s infinite;
+    }
+    p {
+      font-size: 1.5rem;
+      margin: 20px 0;
+    }
+    a {
+      color: #007BFF;
+      text-decoration: none;
+    }
+    @keyframes glitch {
+      0% {
+        transform: skew(0.5deg);
+      }
+      2% {
+        transform: skew(2deg);
+      }
+      4% {
+        transform: skew(-0.5deg);
+      }
+      6% {
+        transform: skew(-2.5deg);
+      }
+      8% {
+        transform: skew(1deg);
+      }
+      10% {
+        transform: skew(0.5deg);
+      }
+      12% {
+        transform: skew(2deg);
+      }
+      14% {
+        transform: skew(-0.5deg);
+      }
+      16% {
+        transform: skew(-2.5deg);
+      }
+      18% {
+        transform: skew(1deg);
+      }
+      20% {
+        transform: skew(0.5deg);
+      }
+      22% {
+        transform: skew(2deg);
+      }
+      24% {
+        transform: skew(-0.5deg);
+      }
+      26% {
+        transform: skew(-2.5deg);
+      }
+      28% {
+        transform: skew(1deg);
+      }
+      30% {
+        transform: skew(0.5deg);
+      }
+      32% {
+        transform: skew(2deg);
+      }
+      34% {
+        transform: skew(-0.5deg);
+      }
+      36% {
+        transform: skew(-2.5deg);
+      }
+      38% {
+        transform: skew(1deg);
+      }
+      40% {
+        transform: skew(0.5deg);
+      }
+      42% {
+        transform: skew(2deg);
+      }
+      44% {
+        transform: skew(-0.5deg);
+      }
+      46% {
+        transform: skew(-2.5deg);
+      }
+      48% {
+        transform: skew(1deg);
+      }
+      50% {
+        transform: skew(0.5deg);
+      }
+      52% {
+        transform: skew(2deg);
+      }
+      54% {
+        transform: skew(-0.5deg);
+      }
+      56% {
+        transform: skew(-2.5deg);
+      }
+      58% {
+        transform: skew(1deg);
+      }
+      60% {
+        transform: skew(0.5deg);
+      }
+      62% {
+        transform: skew(2deg);
+      }
+      64% {
+        transform: skew(-0.5deg);
+      }
+      66% {
+        transform: skew(-2.5deg);
+      }
+      68% {
+        transform: skew(1deg);
+      }
+      70% {
+        transform: skew(0.5deg);
+      }
+      72% {
+        transform: skew(2deg);
+      }
+      74% {
+        transform: skew(-0.5deg);
+      }
+      76% {
+        transform: skew(-2.5deg);
+      }
+      78% {
+        transform: skew(1deg);
+      }
+      80% {
+        transform: skew(0.5deg);
+      }
+      82% {
+        transform: skew(2deg);
+      }
+      84% {
+        transform: skew(-0.5deg);
+      }
+      86% {
+        transform: skew(-2.5deg);
+      }
+      88% {
+        transform: skew(1deg);
+      }
+      90% {
+        transform: skew(0.5deg);
+      }
+      92% {
+        transform: skew(2deg);
+      }
+      94% {
+        transform: skew(-0.5deg);
+      }
+      96% {
+        transform: skew(-2.5deg);
+      }
+      98% {
+        transform: skew(1deg);
+      }
+      100% {
+        transform: skew(0.5deg);
+      }
+    }
+    @keyframes glitch-effect {
+      0% {
+        clip: rect(0, 900px, 0, 0);
+      }
+      10% {
+        clip: rect(10px, 900px, 10px, 0);
+      }
+      20% {
+        clip: rect(20px, 900px, 20px, 0);
+      }
+      30% {
+        clip: rect(30px, 900px, 30px, 0);
+      }
+      40% {
+        clip: rect(40px, 900px, 40px, 0);
+      }
+      50% {
+        clip: rect(50px, 900px, 50px, 0);
+      }
+      60% {
+        clip: rect(60px, 900px, 60px, 0);
+      }
+      70% {
+        clip: rect(70px, 900px, 70px, 0);
+      }
+      80% {
+        clip: rect(80px, 900px, 80px, 0);
+      }
+      90% {
+        clip: rect(90px, 900px, 90px, 0);
+      }
+      100% {
+        clip: rect(100px, 900px, 100px, 0);
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>404</h1>
-        <p>Page Not Found</p>
-        <p>Go back to the <a href="/">home</a></p>
-    </div>
+  <div class="container">
+    <h1 class="glitch" data-text="404">404</h1>
+    <p>
+      Page Not Found
+    </p>
+    <p>
+      Go back to the <a href="/">home page</a>
+    </p>
+  </div>
 </body>
 </html>
