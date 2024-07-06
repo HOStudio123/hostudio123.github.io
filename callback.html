@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Login Callback</title>
+</head>
+<body>
+    <h1>GitHub Login Callback</h1>
+    <div id="user-info"></div>
+    <script>
+        // Extract the code from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+
+        if (code) {
+            // Exchange the code for an access token
+            fetch(`https://your-server.com/authenticate/${code}`)
+                .then(response => response.json())
+                .then(data => {
+                    const accessToken = data.access_token;
+                    // Use the access token to get user information
+                    return fetch('https://api.github.com/user', {
+                        headers: { Authorization: `Bearer ${accessToken}` }
+                    });
+                })
+                .then(response => response.json())
+                .then(user => {
+                    const userInfoDiv = document.getElementById('user-info');
+                    userInfoDiv.innerHTML = `
+                        <p>Name: ${user.name}</p>
+                        <p>Username: ${user.login}</p>
+                        <img src="${user.avatar_url}" alt="avatar" width="100">
+                    `;
+                })
+                .catch(error => console.error('Error:', error));
+        } else {
+            document.getElementById('user-info').innerText = 'No code found in the URL';
+        }
+    </script>
+</body>
+</html>
