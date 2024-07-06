@@ -1,101 +1,80 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset='utf-8'>
-<title>
-HOStudio
-</title>
-<link rel="stylesheet" href="/css/bootstrap.min.css">
-<script type="text/javascript" src="/js/bootstrap.min.js">
-</script>
-<body background="background.png" style="background-repeat:no-repeat; background-size:100% 100%; background-attachment: fixed;">
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-<div class="container-fluid mx-3">
-<a class="navbar-brand" href="/index.html">Welcome to HOStudio Offical Website !</a>
-<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-<span class="navbar-toggler-icon">
-</span>
-</button>
-<div class="collapse navbar-collapse" id="navbarScroll">
-<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-</ul>
-<ul class="navbar-nav me-0 my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-<li class="nav-item">
-<a class="nav-link active" href="/index.html">Home</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/download.html">Files</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="Pages">Pages</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/login.html">Log in</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/register.html">Register</a>
-</li>
-</ul>
-</div>
-</div>
-</nav>
-<div class="time">
-<script>
-var t = null;
-function time() {
-dt = new Date();
-var y = dt.getFullYear();
-var M = dt.getMonth() + 1;
-var d = dt.getDate();
-var h = dt.getHours();
-var m = dt.getMinutes();
-var s = dt.getSeconds();
-M = checkTime(M);
-d = checkTime(d);
-h = checkTime(h);
-m = checkTime(m);
-s = checkTime(s);
-document.getElementById('timeshow').
-innerHTML = '&nbsp;&nbsp; ' + y + '-' + M + '-' + d + '-' + h + ':' + m + ':' + s;
-t = setTimeout(time, 1000)
-}
-window.onload = function () {
-time()
-}
-function checkTime(i) {
-if (i < 10) {
-i = '0' + i;
-}
-return i;
-} 
-</script>
-<font size='4'>
-<strong>
-<br>
-<div id='timeshow'></div>
-</strong>
-</font>
-&nbsp;<a target="_blank" href='https://www.programiz.com/python-programming/online-compiler'>
-<img src='program_logo.svg' width="200px" height="50px/">
-</a>
-<br>
-<br>
-&nbsp;&nbsp;<audio src="international_Chinese.mp3" width="100%" controls="" autoplay="" loop="">
-</audio>
-<br>
-&nbsp;&nbsp; <b>Chinese version of International Song</b>
-<br>
-&nbsp;&nbsp;<audio src="international_Russian.mp3" width="100%" controls="" autoplay="" loop="">
-</audio>
-<br>
-&nbsp;&nbsp; <b>Russian version of International Song</b>
-<br><br><br>
-</div>
-<div class="author">
-<footer>
-<center>Made by HOStudio Development Team</center>
-</footer>
-</div>
+  <meta charset='utf-8'>
+  <title>HOStudio</title>
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+  <body background="src/background.png" style="background-repeat:no-repeat; background-size:100% 100%; background-attachment: fixed;">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid mx-3">
+        <a class="navbar-brand" href="/index.html">HOStudio Offical Website</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon">
+          </span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarScroll">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          </ul>
+          <ul class="navbar-nav me-0 my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+            <li class="nav-item">
+              <a class="nav-link active" href="/index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/download.html">Files</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/Pages/index.html">Pages</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/login.html">Log in</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/register.html">Register</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="time">
+      <script type="text/javascript" src="/js/time.js"></script>
+      <font size='4'>
+        <strong>
+          <br>
+          <div id='time'></div>
+        </strong>
+      </font>
+    </div>
+
+    <a href='https://www.programiz.com/python-programming/online-compiler'><img src='src/programiz-logo.svg' width="110px" height="30px"></a>
+    <a href='https://www.python.org'><img src='src/python-logo.png' width="110px" height="30px"></a>
+    <a href='https://pypi.org'><img src='src/pypi-logo.svg' width="50px"
+    height="40px"></a>
+    <br><br>
+    &nbsp;&nbsp;
+    <audio src="src/international_Chinese.mp3" width="100%" controls="" autoplay="" loop="">
+    </audio>
+    <br>
+    &nbsp;&nbsp;
+    <b>Chinese version of International Song</b>
+    <br>
+    &nbsp;&nbsp;
+    <audio src="src/international_Russian.mp3" width="100%" controls="" autoplay="" loop="">
+    </audio>
+    <br>
+    &nbsp;&nbsp;
+    <b>
+      Russian version of International Song
+    </b>
+    <br><br><br>
+  </div>
+  <div class="author">
+    <footer>
+      <center>
+        Made by HOStudio Development Team
+      </center>
+    </footer>
+  </div>
 </body>
 </head>
 </html>
