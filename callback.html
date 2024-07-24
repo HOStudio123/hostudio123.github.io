@@ -14,8 +14,6 @@
         const code = urlParams.get('code');
 
         if (code) {
-            // Exchange the code for an access token
-            fetch(`https://your-server.com/authenticate/${code}`)
                 .then(response => response.json())
                 .then(data => {
                     const accessToken = data.access_token;
