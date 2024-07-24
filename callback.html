@@ -12,13 +12,7 @@
         // Extract the code from the URL
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get('code');
-
-        if (code) {
-                .then(response => response.json())
-                .then(data => {
-                    const accessToken = data.access_token;
-                    // Use the access token to get user information
-                    return fetch('https://api.github.com/user', {
+        fetch('https://api.github.com/user', {
                         headers: { Authorization: `Bearer ${accessToken}` }
                     });
                 })
