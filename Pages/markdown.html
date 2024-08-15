@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown to HTML Example</title>
+    <style>
+        #markdown-input, #html-output {
+            width: 45%;
+            height: 300px;
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        #html-output {
+            background-color: #f9f9f9;
+            overflow-y: scroll;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Markdown to HTML Converter</h1>
+
+<textarea id="markdown-input" placeholder="Type your markdown here"></textarea>
+<div id="html-output"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+    const markdownInput = document.getElementById('markdown-input');
+    const htmlOutput = document.getElementById('html-output');
+
+    markdownInput.addEventListener('input', () => {
+        const markdownText = markdownInput.value;
+        const htmlText = marked.parse(markdownText);
+        htmlOutput.innerHTML = htmlText;
+    });
+</script>
+
+</body>
+</html>
