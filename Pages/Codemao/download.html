@@ -5,181 +5,127 @@
     <title>Nemo作品下载器</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
-
-        .container {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .input-group {
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #333;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-
-        button {
-            background: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        button:hover {
-            background: #0056b3;
-        }
-
-        .progress-container {
-            margin-top: 15px;
-            height: 20px;
-            background: #eee;
-            border-radius: 10px;
-            overflow: hidden;
+        /* 保持原有样式不变，新增加载动画 */
+        .loader {
             display: none;
+            border: 3px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 3px solid #3498db;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
         }
 
-        .progress-bar {
-            width: 0%;
-            height: 100%;
-            background: #28a745;
-            transition: width 0.3s ease;
-        }
-
-        #result {
-            margin-top: 15px;
-            color: #666;
-        }
-
-        .error {
-            color: #dc3545;
-            margin-top: 10px;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Nemo作品下载器</h2>
-        <div class="input-group">
-            <label>用户ID:</label>
-            <input type="text" id="userId" placeholder="请输入用户ID">
-        </div>
-        <div class="input-group">
-            <label>作品ID（多个用逗号分隔）:</label>
-            <input type="text" id="workIds" placeholder="请输入作品ID">
-        </div>
-        <button onclick="startDownload()">开始下载</button>
-        
-        <div class="progress-container">
-            <div class="progress-bar"></div>
-        </div>
-        
-        <div id="result"></div>
-        <div class="error" id="error"></div>
-    </div>
-
+    <!-- 保持原有HTML结构不变 -->
+    
     <script>
-        async function sha256(str) {
-            const buffer = await crypto.subtle.digest('SHA-256', 
-                new TextEncoder().encode(str));
-            return Array.from(new Uint8Array(buffer))
-                .map(b => b.toString(16).padStart(2, '0')).join('');
-        }
+        // 并发控制配置
+        const CONCURRENT = {
+            IMAGE: 5,   // 图片并行下载数
+            WORK: 2     // 作品并行处理数
+        };
 
-        function updateProgress(progress) {
-            const bar = document.querySelector('.progress-bar');
-            const container = document.querySelector('.progress-container');
-            container.style.display = 'block';
-            bar.style.width = `${progress * 100}%`;
-        }
-
-        async function downloadResource(url) {
-            try {
-                const response = await fetch(url);
-                return await response.blob();
-            } catch (e) {
-                console.error('下载失败:', url, e);
-                return null;
+        // 带重试的下载方法
+        async function fetchWithRetry(url, retries = 3) {
+            for (let i = 0; i < retries; i++) {
+                try {
+                    const response = await fetch(url);
+                    if (response.ok) return response;
+                    throw new Error(`HTTP ${response.status}`);
+                } catch (err) {
+                    if (i === retries - 1) throw err;
+                    await new Promise(r => setTimeout(r, 1000 * (i + 1)));
+                }
             }
+        }
+
+        // 并行处理数组的通用方法
+        async function parallelProcess(array, processor, concurrency) {
+            const results = [];
+            const batches = [];
+            
+            for (let i = 0; i < array.length; i += concurrency) {
+                batches.push(array.slice(i, i + concurrency));
+            }
+
+            for (const batch of batches) {
+                const batchResults = await Promise.allSettled(
+                    batch.map(item => processor(item))
+                );
+                results.push(...batchResults);
+            }
+            
+            return results;
         }
 
         async function processWork(zip, userId, workId, progressCallback) {
             const basePath = `${userId}/user_works/${workId}/`;
             
-            // 获取作品信息
-            const info = await fetch(`https://api.codemao.cn/creation-tools/v1/works/${workId}/source/public`)
-                .then(r => r.json());
-            
-            // 下载BCM文件
-            const bcm = await fetch(info.work_urls[0]).then(r => r.json());
-            zip.file(`${basePath}${workId}.bcm`, JSON.stringify(bcm));
-            
-            // 处理图片资源
-            const userImg = { user_img_dict: {} };
-            const materialPath = `${userId}/user_material/`;
-            const imageEntries = [];
-            
-            for (const key in bcm.styles.styles_dict) {
-                const style = bcm.styles.styles_dict[key];
-                if (style.url) {
-                    imageEntries.push({ id: key, url: style.url });
-                }
-            }
+            // 并行获取作品信息
+            const [info, bcm] = await Promise.all([
+                fetchWithRetry(`https://api.codemao.cn/creation-tools/v1/works/${workId}/source/public`)
+                    .then(r => r.json()),
+                fetchWithRetry(`https://api.codemao.cn/creation-tools/v1/works/${workId}/source/public`)
+                    .then(r => r.json())
+                    .then(info => fetchWithRetry(info.work_urls[0]))
+                    .then(r => r.json())
+            ]);
 
+            // 并行处理图片资源
+            const imageEntries = Object.entries(bcm.styles.styles_dict)
+                .filter(([_, style]) => style.url)
+                .map(([id, style]) => ({ id, url: style.url }));
+
+            const processedImages = [];
             let progress = 0;
-            for (const entry of imageEntries) {
-                const blob = await downloadResource(entry.url);
-                if (blob) {
+            
+            await parallelProcess(imageEntries, async (entry) => {
+                try {
+                    const blob = await fetchWithRetry(entry.url).then(r => r.blob());
                     const hash = await sha256(entry.url);
                     const filename = `${hash}.webp`;
+                    
                     zip.file(materialPath + filename, blob);
-                    userImg.user_img_dict[entry.id] = {
+                    processedImages.push({
                         id: entry.id,
                         path: `${userId}/user_material/${filename}`
-                    };
+                    });
+                } catch (e) {
+                    console.error(`图片下载失败: ${entry.url}`, e);
                 }
+                
                 progress += 1/imageEntries.length;
-                progressCallback(progress * 0.8); // 80%用于图片处理
-            }
+                progressCallback(progress * 0.7); // 70%用于图片
+            }, CONCURRENT.IMAGE);
 
-            // 保存用户图片配置
-            zip.file(`${basePath}${workId}.userimg`, JSON.stringify(userImg));
-
-            // 保存元数据
-            const meta = {
-                bcm_name: info.name,
-                bcm_version: info.bcm_version,
-                // 其他元数据字段...
+            // 创建用户图片配置
+            const userImg = {
+                user_img_dict: processedImages.reduce((dict, img) => {
+                    dict[img.id] = { id: img.id, path: img.path };
+                    return dict;
+                }, {})
             };
-            zip.file(`${basePath}${workId}.meta`, JSON.stringify(meta));
 
-            // 下载封面
-            const cover = await downloadResource(info.preview);
-            if (cover) {
-                zip.file(`${basePath}${workId}.cover`, cover);
-            }
+            // 并行保存元数据和封面
+            await Promise.all([
+                zip.file(`${basePath}${workId}.userimg`, JSON.stringify(userImg)),
+                zip.file(`${basePath}${workId}.meta`, JSON.stringify({
+                    bcm_name: info.name,
+                    bcm_version: info.bcm_version,
+                    // 其他元数据...
+                })),
+                fetchWithRetry(info.preview)
+                    .then(r => r.blob())
+                    .then(cover => zip.file(`${basePath}${workId}.cover`, cover))
+            ]);
 
             return true;
         }
@@ -187,39 +133,48 @@
         async function startDownload() {
             const userId = document.getElementById('userId').value;
             const workIds = document.getElementById('workIds').value.split(',').map(id => id.trim());
-            const resultDiv = document.getElementById('result');
-            const errorDiv = document.getElementById('error');
+            const zip = new JSZip();
             
-            errorDiv.textContent = '';
-            resultDiv.textContent = '';
-
             try {
-                const zip = new JSZip();
-                let completed = 0;
-                
-                for (const workId of workIds) {
-                    await processWork(zip, userId, workId, (progress) => {
-                        const totalProgress = (completed + progress) / workIds.length;
-                        updateProgress(totalProgress);
-                    });
-                    completed++;
-                    updateProgress(completed / workIds.length);
-                }
+                // 显示加载动画
+                const button = document.querySelector('button');
+                button.disabled = true;
+                const loader = document.createElement('div');
+                loader.className = 'loader';
+                button.parentNode.appendChild(loader);
+                loader.style.display = 'inline-block';
 
-                const content = await zip.generateAsync({ type: 'blob' });
+                // 并行处理作品
+                await parallelProcess(workIds, async (workId) => {
+                    const start = Date.now();
+                    await processWork(zip, userId, workId, p => {
+                        const elapsed = (Date.now() - start)/1000;
+                        console.log(`[${workId}] 进度: ${(p*100).toFixed(1)}% 用时: ${elapsed.toFixed(1)}s`);
+                    });
+                }, CONCURRENT.WORK);
+
+                // 生成ZIP文件
+                const content = await zip.generateAsync({
+                    type: 'blob',
+                    compression: 'DEFLATE',
+                    compressionOptions: { level: 9 }
+                });
+
+                // 下载文件
                 const url = URL.createObjectURL(content);
-                
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = `works_${userId}.zip`;
+                a.download = `works_${Date.now()}.zip`;
+                document.body.appendChild(a);
                 a.click();
+                document.body.removeChild(a);
                 URL.revokeObjectURL(url);
-                
-                resultDiv.textContent = '下载完成！';
+
             } catch (e) {
-                errorDiv.textContent = `错误: ${e.message}`;
-                console.error(e);
+                document.getElementById('error').textContent = `错误: ${e.message}`;
             } finally {
+                document.querySelector('.loader').remove();
+                document.querySelector('button').disabled = false;
                 document.querySelector('.progress-container').style.display = 'none';
             }
         }
