@@ -128,15 +128,12 @@
         async function processWork(zip, userId, workId, progressCallback) {
             const basePath = `${userId}/user_works/${workId}/`;
             
-            // 获取作品信息
             const info = await fetch(`https://api.codemao.cn/creation-tools/v1/works/${workId}/source/public`)
                 .then(r => r.json());
             
-            // 下载BCM文件
             const bcm = await fetch(info.work_urls[0]).then(r => r.json());
             zip.file(`${basePath}${workId}.bcm`, JSON.stringify(bcm));
             
-            // 处理图片资源
             const userImg = { user_img_dict: {} };
             const materialPath = `${userId}/user_material/`;
             const imageEntries = [];
@@ -161,21 +158,15 @@
                     };
                 }
                 progress += 1/imageEntries.length;
-                progressCallback(progress * 0.8); // 80%用于图片处理
+                progressCallback(progress * 0.8);
             }
-
-            // 保存用户图片配置
             zip.file(`${basePath}${workId}.userimg`, JSON.stringify(userImg));
-
-            // 保存元数据
             const meta = {
                 bcm_name: info.name,
                 bcm_version: info.bcm_version,
-                // 其他元数据字段...
             };
             zip.file(`${basePath}${workId}.meta`, JSON.stringify(meta));
 
-            // 下载封面
             const cover = await downloadResource(info.preview);
             if (cover) {
                 zip.file(`${basePath}${workId}.cover`, cover);
