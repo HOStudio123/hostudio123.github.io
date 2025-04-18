@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOStudio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100vh;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        #markdown-input, #html-output {
+            width: 80%;
+            max-width: 700px;
+            height: 300px;
+            padding: 15px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        #markdown-input {
+            background-color: #fff;
+            color: #333;
+        }
+        #html-output {
+            background-color: #f9f9f9;
+            overflow-y: auto;
+            color: #444;
+        }
+        textarea:focus, div:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+    </style>
+</head>
+<body>
+
+<h1>Markdown Editor</h1>
+
+<textarea id="markdown-input" placeholder="Type your markdown here"></textarea>
+<div id="html-output"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+    const markdownInput = document.getElementById('markdown-input');
+    const htmlOutput = document.getElementById('html-output');
+
+    markdownInput.addEventListener('input', () => {
+        const markdownText = markdownInput.value;
+        const htmlText = marked.parse(markdownText);
+        htmlOutput.innerHTML = htmlText;
+    });
+</script>
+
+</body>
+</html>

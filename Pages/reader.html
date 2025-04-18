@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOStudio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        #container {
+            width: 80%;
+            height: 80%;
+            background-color: white;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        #controls {
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-bottom: 1px solid #ccc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #fileInput {
+            display: none;
+        }
+        #content {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+        #lineNumbers {
+            background-color: #f0f0f0;
+            padding: 10px;
+            text-align: right;
+            user-select: none;
+            border-right: 1px solid #ccc;
+        }
+        #textArea {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            outline: none;
+            resize: none;
+            overflow: auto;
+        }
+        #searchBar {
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="controls">
+            <button onclick="document.getElementById('fileInput').click()">Open File</button>
+            <input type="file" id="fileInput" accept=".txt" onchange="openFile(event)">
+            <div id="searchBar">
+                <input type="text" id="searchInput" placeholder="Search...">
+                <button onclick="searchText()">Search</button>
+            </div>
+        </div>
+        <div id="content">
+            <div id="lineNumbers"></div>
+            <textarea id="textArea" readonly></textarea>
+        </div>
+    </div>
+
+    <script>
+        function openFile(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const text = e.target.result;
+                    document.getElementById('textArea').value = text;
+                    updateLineNumbers();
+                }
+                reader.readAsText(file);
+            }
+        }
+
+        function updateLineNumbers() {
+            const textArea = document.getElementById('textArea');
+            const lines = textArea.value.split('\n');
+            const lineNumbers = document.getElementById('lineNumbers');
+            lineNumbers.innerHTML = '';
+            for (let i = 0; i < lines.length; i++) {
+                const lineNumber = document.createElement('div');
+                lineNumber.textContent = i + 1;
+                lineNumbers.appendChild(lineNumber);
+            }
+        }
+
+        function searchText() {
+            const searchInput = document.getElementById('searchInput').value;
+            const textArea = document.getElementById('textArea');
+            const content = textArea.value;
+            const startIndex = content.indexOf(searchInput);
+
+            if (startIndex !== -1) {
+                textArea.focus();
+                textArea.setSelectionRange(startIndex, startIndex + searchInput.length);
+            } else {
+                alert('Text not found');
+            }
+        }
+
+        document.getElementById('textArea').addEventListener('input', updateLineNumbers);
+        window.addEventListener('resize', updateLineNumbers);
+    </script>
+</body>
+</html>

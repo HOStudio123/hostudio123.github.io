@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>HOStudio</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 20px;
+    }
+
+    .search-box {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    input {
+      padding: 10px;
+      width: 200px;
+      margin-right: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .work-row {
+      position: relative;
+      display: flex;
+      align-items: center;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      padding: 15px;
+      transition: 0.2s;
+    }
+
+    .work-row:hover {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transform: translateX(5px);
+    }
+
+    .work-image {
+      width: 80px;
+      height: auto;
+      border-radius: 4px;
+      margin-right: 20px;
+    }
+
+    .work-title {
+      font-size: 1.2em;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .user {
+      color: #666;
+      margin-bottom: 8px;
+    }
+
+    .work-id {
+      color: #666;
+      margin-bottom: 8px;
+    }
+
+    .user-id {
+      color: #666;
+      margin-bottom: 8px;
+    }
+
+    .avatar {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .error {
+      color: #dc3545;
+      padding: 10px;
+      text-align: left;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="search-box">
+    <input type="number" id="numInput" placeholder="请输入数量 (5～200)">
+    <button onclick="loadWorks()">随机预览</button>
+  </div>
+  <div id="resultContainer"></div>
+
+  <script>
+    function loadWorks() {
+      const num = document.getElementById('numInput').value;
+      const container = document.getElementById('resultContainer');
+      container.innerHTML = '';
+
+      if (num < 5 || num > 200) {
+        showError('请输入5到200之间的数字！');
+        return;
+      }
+
+      fetch(`https://api.codemao.cn/creation-tools/v1/pc/discover/newest-work?offset=0&limit=${num}`)
+        .then(response => response.json())
+        .then(data => {
+          if (!data.items || data.items.length === 0) {
+            showError('没有找到任何作品！');
+            return;
+          }
+          data.items.forEach(item => {
+            const workRow = document.createElement('div');
+            workRow.className = 'work-row';
+            workRow.onclick = () => {
+              window.open(`https://shequ.codemao.cn/work/${item.work_id}`, '_blank');
+            };
+            const imgContainer = document.createElement('div');
+            const img = document.createElement('img');
+            img.className = 'work-image';
+            img.src = item.preview_url
+            imgContainer.appendChild(img);
+
+            const uimgContainer = document.createElement('div');
+            const uimg = document.createElement('img');
+            uimg.className = 'avatar';
+            uimg.src = item.avatar_url
+            uimgContainer.appendChild(uimg);
+
+            const infoDiv = document.createElement('div');
+            infoDiv.className = 'work-info';
+
+            const title = document.createElement('div');
+            title.className = 'work-title';
+            title.textContent = item.work_name;
+
+            const author = document.createElement('div');
+            author.className = 'user';
+            author.textContent = `作者: ${item.nickname}`;
+
+            const id = document.createElement('div');
+            id.className = 'work-id';
+            id.textContent = `作品ID: ${item.work_id}`;
+
+            const uid = document.createElement('div');
+            uid.className = 'user-id';
+            uid.textContent = `作者ID: ${item.user_id}`;
+
+            uimgContainer.onclick = (e) => {
+              e.stopPropagation();
+              window.open(`https://shequ.codemao.cn/user/${item.user_id}`, '_blank');
+            };
+
+            infoDiv.append(title, author, id, uid);
+            workRow.append(imgContainer, infoDiv, uimgContainer);
+            container.appendChild(workRow);
+          });
+        })
+        .catch(error => {
+          showError(`数据加载失败，请检查网络`);
+        });
+    }
+
+    function showError(message) {
+      const errorDiv = document.createElement('div');
+      errorDiv.className = 'error';
+      errorDiv.textContent = message;
+      document.getElementById('resultContainer').appendChild(errorDiv);
+    }
+  </script>
+</body>
+
+</html>

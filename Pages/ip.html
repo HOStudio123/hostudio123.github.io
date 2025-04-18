@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HOStudio</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 600px;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    h1 {
+      color: #2c3e50;
+      margin-bottom: 30px;
+      font-size: 2.5em;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    #ipAddress {
+      font-size: 2em;
+      color: #3498db;
+      padding: 20px;
+      background: #f8f9fa;
+      border-radius: 10px;
+      margin: 20px 0;
+      font-weight: 500;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      position: relative;
+      text-align: left;
+      white-space: pre-wrap;
+    }
+
+    .info-container {
+      text-align: left;
+      margin-top: 20px;
+    }
+
+    .info-item {
+      text-align: ;
+      margin-bottom: 10px;
+      font-size: 1.4em;
+      color: #2c3e50;
+    }
+
+    .info-item strong {
+      color: #3498db;
+    }
+
+    .loading {
+      position: relative;
+      color: transparent !important;
+    }
+
+    .loading::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 24px;
+      height: 24px;
+      border: 3px solid #ddd;
+      border-top-color: #3498db;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      transform: translate(-50%, -50%);
+    }
+
+    .error {
+      color: #e74c3c !important;
+      background: #fdeded !important;
+    }
+
+    @keyframes spin {
+      to {
+        transform: translate(-50%, -50%) rotate(360deg);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 25px;
+      }
+
+      h1 {
+        font-size: 1.8em;
+      }
+
+      #ipAddress {
+        font-size: 1.2em;
+      }
+
+      .info-item {
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <h1>Network IP Address</h1>
+    <p id="ipAddress">Waiting</p>
+    <div id="infoContainer" class="info-container"></div>
+  </div>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const ipElement = document.getElementById('ipAddress');
+      const infoContainer = document.getElementById('infoContainer');
+      ipElement.classList.add('loading');
+
+      fetch('http://ip-api.com/json')
+        .then(response => {
+          if (!response.ok) throw new Error('No response');
+          return response.json();
+        })
+        .then(data => {
+          ipElement.textContent = data.query;
+          ipElement.classList.remove('loading');
+          ipElement.style.animation = 'fadeIn 0.5s ease';
+
+          const infoItems = [
+            { label: '国家', value: data.country },
+            { label: '区域', value: data.regionName },
+            { label: '城市', value: data.city },
+            { label: '邮编', value: data.zip },
+            { label: '服务', value: data.isp },
+            { label: '组织', value: data.org },
+            { label: '时区', value: data.timezone },
+            { label: '纬度', value: data.lat },
+            { label: '经度', value: data.lon },
+                    ];
+
+          infoItems.forEach(item => {
+            const infoItem = document.createElement('div');
+            infoItem.className = 'info-item';
+            infoItem.innerHTML = `<strong>${item.label} </strong>${item.value}`;
+            infoContainer.appendChild(infoItem);
+          });
+        })
+        .catch(error => {
+          fetch('https://api.ipify.org?format=json')
+            .then(response => {
+              if (!response.ok) throw new Error('No response');
+              return response.json();
+            })
+            .then(data_new => {
+              ipElement.textContent = data_new.ip;
+              ipElement.classList.remove('loading');
+              ipElement.style.animation = 'fadeIn 0.5s ease';
+            })
+            .catch(error => {
+              ipElement.textContent = 'FAILED TO FETCH';
+              ipElement.classList.remove('loading');
+              ipElement.classList.add('error');
+            })
+        });
+    });
+  </script>
+</body>
+
+</html>

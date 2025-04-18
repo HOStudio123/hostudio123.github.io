@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>HOStudio</title>
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/time.css">
+  <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+  <style>
+    body {
+      background: url('src/background.png') no-repeat center center fixed;
+      background-size: cover;
+    }
+    .container {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .card {
+      background-color: rgba(255, 255, 255, 0.3);
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+      position: relative;
+    }
+    .card button {
+      background-color: rgba(255, 255, 255, 0.3);
+      border: none;
+      border-radius: 15px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .progress-bar {
+      width: 100%;
+      margin-bottom: 5px;
+    }
+    .time-display {
+      font-size: 14px;
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+    }
+    footer {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid mx-3">
+      <a class="navbar-brand" href="/index.html">HOStudio Official Website</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarScroll">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+        <ul class="navbar-nav me-0 my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+          <li class="nav-item"><a class="nav-link active" href="/index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="/src/index.html">Files</a></li>
+          <li class="nav-item"><a class="nav-link" href="/Bookmarks/index.html">Bookmarks</a></li>
+          <li class="nav-item"><a class="nav-link" href="/Pages/index.html">Pages</a></li>
+          <li class="nav-item"><a class="nav-link" href="/login.html">Login</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="card" id="container1">
+      <span style="font-weight: bold; font-size: 18px; display: block; margin-bottom: 10px;">国际歌</span>
+      <div class="time-display">
+        <span id="currentTime1">00:00</span>
+        <span id="duration1">00:00</span>
+      </div>
+      <input type="range" id="seekbar1" class="progress-bar" value="0" min="0" max="100" step="1">
+      <button id="button1" onclick="togglePlay('audio1', 'button1')">Play</button>
+      <audio id="audio1" src="src/The_Internationale_Chinese.mp3"></audio>
+    </div>
+
+    <div class="card" id="container2">
+      <span style="font-weight: bold; font-size: 18px; display: block; margin-bottom: 10px;">Интернационал</span>
+      <div class="time-display">
+        <span id="currentTime2">00:00</span>
+        <span id="duration2">00:00</span>
+      </div>
+      <input type="range" id="seekbar2" class="progress-bar" value="0" min="0" max="100" step="1">
+      <button id="button2" onclick="togglePlay('audio2', 'button2')">Play</button>
+      <audio id="audio2" src="src/The_Internationale_Russian.mp3"></audio>
+    </div>
+  </div>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('audio').forEach(audio => {
+        audio.load()
+        audio.onloadedmetadata = function() {
+          const durationId = this.id.replace('audio', 'duration')
+          document.getElementById(durationId).textContent = formatTime(this.duration)
+        }
+        audio.onerror = () => {
+          document.getElementById(`duration${audio.id.slice(-1)}`).textContent = "00:00"
+        }
+      })
+    })
+
+    function formatTime(seconds) {
+      if (isNaN(seconds)) return "00:00"
+      const min = Math.floor(seconds / 60)
+      const sec = Math.floor(seconds % 60)
+      return `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`
+    }
+
+    function togglePlay(audioId, buttonId) {
+      const audio = document.getElementById(audioId)
+      const button = document.getElementById(buttonId)
+      
+      document.querySelectorAll('audio').forEach(otherAudio => {
+        if (otherAudio.id !== audioId && !otherAudio.paused) {
+          otherAudio.pause()
+          const otherButton = document.getElementById(`button${otherAudio.id.slice(-1)}`)
+          otherButton.textContent = "Play"
+        }
+      })
+
+      if (audio.paused) {
+        audio.play()
+        button.textContent = "Stop"
+      } else {
+        audio.pause()
+        button.textContent = "Play"
+      }
+      audio.ontimeupdate = () => {
+        const seekbar = document.getElementById(`seekbar${audioId.slice(-1)}`)
+        const currentTimeDisplay = document.getElementById(`currentTime${audioId.slice(-1)}`)
+        seekbar.value = (audio.currentTime / audio.duration) * 100 || 0
+        currentTimeDisplay.textContent = formatTime(audio.currentTime)
+      }
+      document.querySelectorAll('.progress-bar').forEach(seekbar => {
+        seekbar.oninput = function() {
+          const audio = document.getElementById(`audio${this.id.slice(-1)}`)
+          audio.currentTime = (this.value / 100) * audio.duration
+        }
+      })
+    }
+    document.getElementById('audio1').addEventListener('ended', function() {
+      document.getElementById('button1').textContent = "Play"
+    })
+    document.getElementById('audio2').addEventListener('ended', function() {
+      document.getElementById('button2').textContent = "Play"
+    })
+  </script>
+  
+  <footer>
+    Made by HOStudio Development Team
+  </footer>
+  
+  <div class="time">
+    <script type="text/javascript" src="/js/time.js"></script>
+    <font size="3">
+      <div id="time"></div>
+    </font>
+  </div>
+  
+  <div class="click-effect-container"></div>
+  
+  <script src="/js/click.js"></script>
+</body>
+</html>

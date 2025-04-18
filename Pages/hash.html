@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOStudio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        input {
+            width: 93%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        select, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        .result {
+            margin-top: 20px;
+            word-wrap: break-word;
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Hash Generator</h1>
+    <input type="text" id="inputText" placeholder="Enter text to hash">
+    <select id="hashType">
+        <option value="md5">MD5</option>
+        <option value="sha256">SHA-256</option>
+        <option value="sha512">SHA-512</option>
+    </select>
+    <button onclick="generateHash()">Generate Hash</button>
+    <div class="result" id="result"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+<script>
+    function generateHash() {
+        var text = document.getElementById('inputText').value;
+        var hashType = document.getElementById('hashType').value;
+        var result;
+
+        if (hashType === 'md5') {
+            result = CryptoJS.MD5(text).toString();
+        } else if (hashType === 'sha256') {
+            result = CryptoJS.SHA256(text).toString();
+        } else if (hashType === 'sha512') {
+            result = CryptoJS.SHA512(text).toString();
+        }
+
+        document.getElementById('result').innerText = result;
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Nemo作品下载器</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .progress-container {
+            margin-top: 15px;
+            height: 20px;
+            background: #eee;
+            border-radius: 10px;
+            overflow: hidden;
+            display: none;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: #28a745;
+            transition: width 0.3s ease;
+        }
+
+        #result {
+            margin-top: 15px;
+            color: #666;
+        }
+
+        .error {
+            color: #dc3545;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Nemo作品下载器</h2>
+        <div class="input-group">
+            <label>用户ID:</label>
+            <input type="text" id="userId" placeholder="请输入用户ID">
+        </div>
+        <div class="input-group">
+            <label>作品ID（多个用逗号分隔）:</label>
+            <input type="text" id="workIds" placeholder="请输入作品ID">
+        </div>
+        <button onclick="startDownload()">开始下载</button>
+        
+        <div class="progress-container">
+            <div class="progress-bar"></div>
+        </div>
+        
+        <div id="result"></div>
+        <div class="error" id="error"></div>
+    </div>
+
+    <script>
+        async function sha256(str) {
+            const buffer = await crypto.subtle.digest('SHA-256', 
+                new TextEncoder().encode(str));
+            return Array.from(new Uint8Array(buffer))
+                .map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        function updateProgress(progress) {
+            const bar = document.querySelector('.progress-bar');
+            const container = document.querySelector('.progress-container');
+            container.style.display = 'block';
+            bar.style.width = `${progress * 100}%`;
+        }
+
+        async function downloadResource(url) {
+            try {
+                const response = await fetch(url);
+                return await response.blob();
+            } catch (e) {
+                console.error('下载失败:', url, e);
+                return null;
+            }
+        }
+
+        async function processWork(zip, userId, workId, progressCallback) {
+            const basePath = `${userId}/user_works/${workId}/`;
+            
+            const info = await fetch(`https://api.codemao.cn/creation-tools/v1/works/${workId}/source/public`)
+                .then(r => r.json());
+            
+            const bcm = await fetch(info.work_urls[0]).then(r => r.json());
+            zip.file(`${basePath}${workId}.bcm`, JSON.stringify(bcm));
+            
+            const userImg = { user_img_dict: {} };
+            const materialPath = `${userId}/user_material/`;
+            const imageEntries = [];
+            
+            for (const key in bcm.styles.styles_dict) {
+                const style = bcm.styles.styles_dict[key];
+                if (style.url) {
+                    imageEntries.push({ id: key, url: style.url });
+                }
+            }
+
+            let progress = 0;
+            for (const entry of imageEntries) {
+                const blob = await downloadResource(entry.url);
+                if (blob) {
+                    const hash = await sha256(entry.url);
+                    const filename = `${hash}.webp`;
+                    zip.file(materialPath + filename, blob);
+                    userImg.user_img_dict[entry.id] = {
+                        id: entry.id,
+                        path: `${userId}/user_material/${filename}`
+                    };
+                }
+                progress += 1/imageEntries.length;
+                progressCallback(progress * 0.8);
+            }
+            zip.file(`${basePath}${workId}.userimg`, JSON.stringify(userImg));
+            const meta = {
+                bcm_name: info.name,
+                bcm_version: info.bcm_version,
+            };
+            zip.file(`${basePath}${workId}.meta`, JSON.stringify(meta));
+
+            const cover = await downloadResource(info.preview);
+            if (cover) {
+                zip.file(`${basePath}${workId}.cover`, cover);
+            }
+
+            return true;
+        }
+
+        async function startDownload() {
+            const userId = document.getElementById('userId').value;
+            const workIds = document.getElementById('workIds').value.split(',').map(id => id.trim());
+            const resultDiv = document.getElementById('result');
+            const errorDiv = document.getElementById('error');
+            
+            errorDiv.textContent = '';
+            resultDiv.textContent = '';
+
+            try {
+                const zip = new JSZip();
+                let completed = 0;
+                
+                for (const workId of workIds) {
+                    await processWork(zip, userId, workId, (progress) => {
+                        const totalProgress = (completed + progress) / workIds.length;
+                        updateProgress(totalProgress);
+                    });
+                    completed++;
+                    updateProgress(completed / workIds.length);
+                }
+
+                const content = await zip.generateAsync({ type: 'blob' });
+                const url = URL.createObjectURL(content);
+                
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `works_${userId}.zip`;
+                a.click();
+                URL.revokeObjectURL(url);
+                
+                resultDiv.textContent = '下载完成！';
+            } catch (e) {
+                errorDiv.textContent = `错误: ${e.message}`;
+                console.error(e);
+            } finally {
+                document.querySelector('.progress-container').style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
